@@ -41,8 +41,8 @@ def chat_users(user1, user2):
 @app.route('/api/chat/user/<string:user1>')
 def chat_user(user1):
     if request.method == 'GET':
-        limit = int(request.args.get('limit', 10))
-        skip = int(request.args.get('skip', 0))
+        limit = int(10 if request.args.get('limit', 10) is None else int(request.args.get('limit', 10)))
+        skip = int(0 if request.args.get('limit', 0) is None else int(request.args.get('skip')))
 
         chats = json.loads(get_chats_user(user1, skip, limit).to_json())
         print(chats)
