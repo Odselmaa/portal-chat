@@ -41,9 +41,8 @@ def chat_users(user1, user2):
 @app.route('/api/chat/user/<string:user1>')
 def chat_user(user1):
     if request.method == 'GET':
-        payload = request.json
-        limit = payload.get('limit', 10)
-        skip = payload.get('skip', 0)
+        limit = int(request.args.get('limit', 10))
+        skip = int(request.args.get('skip', 0))
 
         chats = json.loads(get_chats_user(user1, skip, limit).to_json())
         print(chats)
@@ -81,7 +80,9 @@ def add_chat(chat_id, user_id):
 @app.route('/api/chat/<string:chat_id>/message')
 def get_msgs(chat_id):
     if request.method == 'GET':
-        fields = request.json.get('fields', [])
+        fields = request.args.get('fields', [])
+        if fields != []:
+            fields = fields.split(',')
         message = get_all_messages(ObjectId(chat_id), fields).to_json()
         return jsonify({'response':json.loads(message),
                         'statusCode': 200}), 200
