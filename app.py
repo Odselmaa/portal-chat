@@ -13,7 +13,7 @@ import requests
 app = Flask(__name__)
 app.config['MONGODB_DB'] = 'Portal'
 app.config[
-    'MONGODB_HOST'] = 'mongodb://admin_odko:WinniePooh@portalinternational-shard-00-00-3b6lw.mongodb.net:27017,portalinternational-shard-00-01-3b6lw.mongodb.net:27017,portalinternational-shard-00-02-3b6lw.mongodb.net:27017/Portal?ssl=true&replicaSet=PortalInternational-shard-0&authSource=admin'
+    'MONGODB_HOST'] = 'mongodb://admin_remine:WinniePooh8@cluster0-shard-00-00-h4vdb.mongodb.net:27017,cluster0-shard-00-01-h4vdb.mongodb.net:27017,cluster0-shard-00-02-h4vdb.mongodb.net:27017/Portal?replicaSet=Cluster0-shard-0&ssl=true&authSource=admin'
 app.config['MONGODB_USERNAME'] = 'admin_odko'
 app.config['MONGODB_PASSWORD'] = 'WinniePooh'
 db = MongoEngine()
@@ -105,6 +105,7 @@ def global_handler_bad_request(e):
 @app.errorhandler(bson.errors.InvalidId)
 def global_handler_not_found(e):
     return jsonify({'statusCode': 404, 'response': 'Not found'}), 404
+
 
 
 def is_valid_id(_id):
